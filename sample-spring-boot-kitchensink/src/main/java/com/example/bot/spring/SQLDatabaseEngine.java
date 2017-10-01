@@ -11,8 +11,34 @@ import java.net.URI;
 public class SQLDatabaseEngine extends DatabaseEngine {
 	@Override
 	String search(String text) throws Exception {
-		//Write your code here
-		return null;
+		ResultSet result = null;
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		String responce = null;
+		try {
+			connection = this.getConnection();
+			stmt = connection.prepareStatement(
+					"SELECT response FROM auto_responce WHERE keyword = ? LIMIT 1"
+			);
+			stmt.setString(1, text);
+			result = stmt.executeQuery();
+			if (result.next()){
+				responce = result.getString(1);
+			}
+		} catch (Exception e) {
+			log.info("Exception while access database: {}", e.toString());
+		} finally {
+			try {
+				result.close();
+				stmt.close();
+				connection.close();
+			} catch (Exception ex) {
+				log.info("Exception while closing database: {}", ex.toString());
+			}
+		}
+		if (responce != null)
+			return responce;
+		throw new Exception("NOT FOUND");
 	}
 	
 	

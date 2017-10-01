@@ -46,7 +46,7 @@ import com.example.bot.spring.DatabaseEngine;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class })
+@SpringBootTest(classes = { KitchenSinkTester.class, SQLDatabaseEngine.class })
 public class KitchenSinkTester {
 	@Autowired
 	private DatabaseEngine databaseEngine;
@@ -72,7 +72,7 @@ public class KitchenSinkTester {
 			thrown = true;
 		}
 		assertThat(!thrown).isEqualTo(true);
-		assertThat(result).isEqualTo("def");
+		assertThat(result).isEqualTo("cde");
 	}
 	
 	@Test
@@ -85,7 +85,7 @@ public class KitchenSinkTester {
 			thrown = true;
 		}
 		assertThat(!thrown);
-		assertThat(result.equals("Hey, how things going?"));
+		assertThat(result.equals("Whats up"));
 	}
 
 	@Test
@@ -93,11 +93,11 @@ public class KitchenSinkTester {
 		boolean thrown = false;
 		String result = null;
 		try {
-			result = this.databaseEngine.search("I am fine");
+			result = this.databaseEngine.search("Who are u?");
 		} catch (Exception e) {
 			thrown = true;
 		}
 		assertThat(!thrown);
-		assertThat(result.equals("Great!"));
+		assertThat(result.equals("Leon!"));
 	}
 }
